@@ -1,0 +1,350 @@
+{"kind":"image","path":"C:\\Users\\kapil\\OneDrive\\Desktop\\DesignProject\\outputs\\fifo_presentation\\scratch\\docx_media\\image1.jpeg","bbox":[72,70,232,132]}
+{"kind":"textbox","text":"Design Project (PVL292)","bbox":[72,232,248,26]}
+{"kind":"textbox","text":"M.Tech VLSI Design","bbox":[72,264,248,24]}
+{"kind":"textbox","text":"ASSERTION-BASED VERIFICATION OF\nSYNCHRONOUS FIFO USING\nSYSTEMVERILOG","bbox":[445,104,735,178]}
+{"kind":"textbox","text":"Submitted by","bbox":[448,346,210,22]}
+{"kind":"textbox","text":"Kapil Tripathi\n6025620017","bbox":[448,374,310,64]}
+{"kind":"textbox","text":"Under supervision of","bbox":[818,346,270,22]}
+{"kind":"textbox","text":"Dr. Arnab Pattanayak\nDr. Lalit Kumar Baghel","bbox":[818,374,370,64]}
+{"kind":"textbox","text":"Electronics and Communication Engineering Department\nThapar Institute of Engineering & Technology, Patiala\nMay 2026","bbox":[448,552,740,72]}
+{"kind":"textbox","text":"Presentation Roadmap","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"Project flow","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"02","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"1","bbox":[123,123,58,38]}
+{"kind":"textbox","text":"Problem and objective","bbox":[86,204,136,28]}
+{"kind":"textbox","text":"Why FIFO control must be verified before reuse.","bbox":[86,244,136,144]}
+{"kind":"textbox","text":"2","bbox":[323,123,58,38]}
+{"kind":"textbox","text":"DUT architecture","bbox":[286,204,136,28]}
+{"kind":"textbox","text":"Synchronous FIFO with separate RAM and controller.","bbox":[286,244,136,144]}
+{"kind":"textbox","text":"3","bbox":[523,123,58,38]}
+{"kind":"textbox","text":"SV environment","bbox":[486,204,136,28]}
+{"kind":"textbox","text":"Generator, driver, monitor, scoreboard, and interface.","bbox":[486,244,136,144]}
+{"kind":"textbox","text":"4","bbox":[723,123,58,38]}
+{"kind":"textbox","text":"SVA plan","bbox":[686,204,136,28]}
+{"kind":"textbox","text":"Assertions bound to internal FIFO control signals.","bbox":[686,244,136,144]}
+{"kind":"textbox","text":"5","bbox":[923,123,58,38]}
+{"kind":"textbox","text":"Fault results","bbox":[886,204,136,28]}
+{"kind":"textbox","text":"Five injected issues with waveform/log evidence.","bbox":[886,244,136,144]}
+{"kind":"textbox","text":"6","bbox":[1123,123,58,38]}
+{"kind":"textbox","text":"Conclusion","bbox":[1086,204,136,28]}
+{"kind":"textbox","text":"Findings, limitations, and UVM migration path.","bbox":[1086,244,136,144]}
+{"kind":"textbox","text":"The deck follows the same logic as the report, but keeps each result focused on what failed, which checker caught it, and what the waveform proves.","bbox":[122,472,1030,54]}
+{"kind":"textbox","text":"Why FIFO Verification Matters","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"Motivation","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"03","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"A FIFO is simple in concept but sensitive at its boundaries: reset, empty, full, read/write overlap, and pointer wrap.","bbox":[72,96,800,56]}
+{"kind":"textbox","text":"Data ordering","bbox":[96,210,276,28]}
+{"kind":"textbox","text":"Oldest accepted write must be the first valid read. A pointer bug can silently repeat or skip stored data.","bbox":[96,250,276,88]}
+{"kind":"textbox","text":"Flow control","bbox":[96,398,276,28]}
+{"kind":"textbox","text":"full and empty are not cosmetic flags. They directly block writes and reads to prevent overflow and underflow.","bbox":[96,438,276,88]}
+{"kind":"textbox","text":"Reset safety","bbox":[454,398,276,28]}
+{"kind":"textbox","text":"The FIFO must start from a known empty state so later traffic is not contaminated by stale count or pointer values.","bbox":[454,438,276,88]}
+{"kind":"textbox","text":"Debug observability","bbox":[810,398,276,28]}
+{"kind":"textbox","text":"Assertions expose internal control mistakes immediately, while the scoreboard checks visible data behavior.","bbox":[810,438,276,88]}
+{"kind":"textbox","text":"Producer","bbox":[528,230,130,30]}
+{"kind":"textbox","text":"FIFO\nqueue","bbox":[792,225,80,50]}
+{"kind":"textbox","text":"Consumer","bbox":[1006,230,120,30]}
+{"kind":"textbox","text":"Why SystemVerilog Over Verilog","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"Language choice","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"04","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"SystemVerilog keeps Verilog-style RTL, but adds verification features that are directly useful for this FIFO project.","bbox":[70,92,1020,42]}
+{"kind":"textbox","text":"Verilog HDL","bbox":[100,190,250,30]}
+{"kind":"textbox","text":"- Strong fit for synthesizable RTL modeling\n- Modules, nets, registers, always blocks\n- Basic procedural testbenches are possible\n- Limited language support for reusable verification\n- Assertions, classes, coverage, and constrained random are not the core Verilog model","bbox":[100,244,430,214]}
+{"kind":"textbox","text":"SystemVerilog","bbox":[720,190,300,30]}
+{"kind":"textbox","text":"- Unified design, specification, and verification language\n- Assertions for protocol and temporal properties\n- Classes, mailboxes, and virtual interfaces for testbench reuse\n- Constrained random stimulus and functional coverage support\n- Natural foundation for later UVM migration","bbox":[720,244,430,214]}
+{"kind":"textbox","text":"IEEE 1800-2023 describes SystemVerilog support for RTL/gate modeling and testbenches using coverage, assertions, object-oriented programming, and constrained random verification.","bbox":[120,580,1040,44]}
+{"kind":"textbox","text":"OOP Concepts in SystemVerilog","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"Basic definitions","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"05","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"SystemVerilog supports object-oriented testbench coding. The idea is to model verification activity as reusable objects instead of only toggling raw signals.","bbox":[70,92,1040,48]}
+{"kind":"textbox","text":"Class","bbox":[92,192,142,26]}
+{"kind":"textbox","text":"Blueprint that groups data and tasks/functions.","bbox":[92,226,292,36]}
+{"kind":"textbox","text":"class transaction; ... endclass","bbox":[92,268,292,22]}
+{"kind":"textbox","text":"Object","bbox":[482,192,142,26]}
+{"kind":"textbox","text":"Runtime instance created from a class.","bbox":[482,226,292,36]}
+{"kind":"textbox","text":"transaction tr = new();","bbox":[482,268,292,22]}
+{"kind":"textbox","text":"Encapsulation","bbox":[872,192,142,26]}
+{"kind":"textbox","text":"Keep related fields and behavior in one unit.","bbox":[872,226,292,36]}
+{"kind":"textbox","text":"transaction stores wr_en, rd_en, data, flags","bbox":[872,268,292,22]}
+{"kind":"textbox","text":"Abstraction","bbox":[92,370,142,26]}
+{"kind":"textbox","text":"Use a simple method call while hiding internal steps.","bbox":[92,404,292,36]}
+{"kind":"textbox","text":"env.run(); driver.run();","bbox":[92,446,292,22]}
+{"kind":"textbox","text":"Inheritance","bbox":[482,370,142,26]}
+{"kind":"textbox","text":"Create a child class from a parent class.","bbox":[482,404,292,36]}
+{"kind":"textbox","text":"class child extends parent;","bbox":[482,446,292,22]}
+{"kind":"textbox","text":"Polymorphism","bbox":[872,370,142,26]}
+{"kind":"textbox","text":"Base handle can call child-specific behavior.","bbox":[872,404,292,36]}
+{"kind":"textbox","text":"virtual function / task","bbox":[872,446,292,22]}
+{"kind":"textbox","text":"For this project, the most visible OOP features are classes, objects, encapsulation, abstraction, mailboxes, randomization, and virtual interfaces.","bbox":[114,568,1030,42]}
+{"kind":"textbox","text":"How OOP Appears in This Testbench","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"Project mapping","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"06","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"Your SystemVerilog testbench uses objects to represent FIFO operations and verification components.","bbox":[70,92,1040,36]}
+{"kind":"textbox","text":"transaction","bbox":[74,191,168,24]}
+{"kind":"textbox","text":"Object for one FIFO operation\nrand oper, rand wr_data\nconstraints control stimulus","bbox":[74,226,168,62]}
+{"kind":"textbox","text":"generator","bbox":[316,191,168,24]}
+{"kind":"textbox","text":"Creates transaction objects\nrandomizes them\nsends using mailbox","bbox":[316,226,168,62]}
+{"kind":"textbox","text":"driver","bbox":[558,191,168,24]}
+{"kind":"textbox","text":"Gets transaction from mailbox\ncalls write() or read()\ndrives virtual fifo_if","bbox":[558,226,168,62]}
+{"kind":"textbox","text":"monitor","bbox":[800,191,168,24]}
+{"kind":"textbox","text":"Samples DUT interface\ncreates observed transaction\nsends to scoreboard","bbox":[800,226,168,62]}
+{"kind":"textbox","text":"scoreboard","bbox":[1042,191,168,24]}
+{"kind":"textbox","text":"Stores expected queue\ncompares rd_data\ncounts mismatches","bbox":[1042,226,168,62]}
+{"kind":"textbox","text":"environment class","bbox":[110,394,210,24]}
+{"kind":"textbox","text":"Creates and connects the component objects:\ngen = new(gdmbx);\ndrv = new(gdmbx);\nmon = new(msmbx);\nsco = new(msmbx);","bbox":[110,430,430,80]}
+{"kind":"textbox","text":"Benefit to testing","bbox":[700,394,210,24]}
+{"kind":"textbox","text":"- Cleaner separation of stimulus, driving, monitoring, and checking\n- Randomized transactions create many read/write cases\n- Mailboxes decouple components and make data flow clear\n- Same structure can be migrated naturally toward UVM","bbox":[700,430,430,80]}
+{"kind":"textbox","text":"Short viva line: SystemVerilog OOP turns the testbench into reusable verification components instead of a single block of procedural signal toggling.","bbox":[116,582,1030,36]}
+{"kind":"textbox","text":"Synchronous FIFO Basics","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"DUT behavior","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"07","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"First-in first-out rule","bbox":[70,98,400,30]}
+{"kind":"textbox","text":"The FIFO accepts writes into the tail and reads from the head. Status flags are generated from occupancy count.","bbox":[70,132,800,32]}
+{"kind":"textbox","text":"Write side","bbox":[122,214,196,28]}
+{"kind":"textbox","text":"wr_en\nwr_data\nwr_ptr advances","bbox":[124,250,192,54]}
+{"kind":"textbox","text":"FIFO storage","bbox":[530,198,220,30]}
+{"kind":"textbox","text":"oldest data at front\nfifo_count tracks occupancy\nfull / empty from count","bbox":[532,242,220,74]}
+{"kind":"textbox","text":"Read side","bbox":[962,214,196,28]}
+{"kind":"textbox","text":"rd_en\nrd_data\nrd_ptr advances","bbox":[964,250,192,54]}
+{"kind":"textbox","text":"Key control equations","bbox":[196,454,366,18]}
+{"kind":"textbox","text":"do_write = wr_en && !full;\ndo_read  = rd_en && !empty;\nfull     = (fifo_count == DEPTH);\nempty    = (fifo_count == 0);","bbox":[196,478,366,82]}
+{"kind":"textbox","text":"Project parameters","bbox":[682,450,346,28]}
+{"kind":"textbox","text":"DW = 8 data bits\nAW = 4 address bits\nDEPTH = 2^AW = 16 entries\nfifo_count range = 0..16","bbox":[682,490,346,74]}
+{"kind":"textbox","text":"Design Under Test Architecture","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"sync_fifo_ram + sync_ram","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"08","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"The verified DUT separates control from storage: sync_fifo_ram manages pointers/count/flags, while sync_ram stores data.","bbox":[70,92,1050,44]}
+{"kind":"textbox","text":"Inputs","bbox":[96,210,138,26]}
+{"kind":"textbox","text":"clk, rst\nwr_en, rd_en\nwr_data","bbox":[98,244,134,50]}
+{"kind":"textbox","text":"FIFO controller","bbox":[420,198,210,28]}
+{"kind":"textbox","text":"wr_ptr, rd_ptr\nfifo_count\ndo_write, do_read\nfull, empty","bbox":[422,238,206,84]}
+{"kind":"textbox","text":"Synchronous RAM","bbox":[820,200,210,28]}
+{"kind":"textbox","text":"waddr, raddr\ndin, dout\nwrite enable","bbox":[828,244,194,58]}
+{"kind":"textbox","text":"Outputs\n\nrd_data\nfull\nempty","bbox":[1170,204,60,90]}
+{"kind":"textbox","text":"Bound SVA checker","bbox":[380,462,310,24]}
+{"kind":"textbox","text":"observes internal pointers, count, and accepted operations","bbox":[378,493,314,26]}
+{"kind":"textbox","text":"Scoreboard model","bbox":[808,462,310,24]}
+{"kind":"textbox","text":"keeps expected FIFO order using a queue","bbox":[808,493,310,26]}
+{"kind":"textbox","text":"SystemVerilog Verification Environment","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"Class-based testbench","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"09","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"The environment separates stimulus generation, bus driving, monitoring, and result checking. This makes each failure easier to localize.","bbox":[70,92,1050,46]}
+{"kind":"textbox","text":"Generator","bbox":[88,210,142,24]}
+{"kind":"textbox","text":"random\ntransaction","bbox":[88,240,142,36]}
+{"kind":"textbox","text":"Driver","bbox":[310,210,142,24]}
+{"kind":"textbox","text":"drives\nfifo_if","bbox":[310,240,142,36]}
+{"kind":"textbox","text":"Interface","bbox":[532,210,142,24]}
+{"kind":"textbox","text":"clk/rst\nsignals","bbox":[532,240,142,36]}
+{"kind":"textbox","text":"DUT","bbox":[754,210,142,24]}
+{"kind":"textbox","text":"sync_fifo_ram","bbox":[754,240,142,36]}
+{"kind":"textbox","text":"SVA","bbox":[976,210,142,24]}
+{"kind":"textbox","text":"bind checker","bbox":[976,240,142,36]}
+{"kind":"textbox","text":"Monitor","bbox":[345,457,150,24]}
+{"kind":"textbox","text":"samples bus","bbox":[345,490,150,24]}
+{"kind":"textbox","text":"Scoreboard","bbox":[835,457,160,24]}
+{"kind":"textbox","text":"compares expected\nvs actual data","bbox":[835,486,160,36]}
+{"kind":"textbox","text":"SystemVerilog features used","bbox":[94,590,1036,28]}
+{"kind":"textbox","text":"class-based transaction, randomized generator, mailbox communication, virtual interface, bind-based assertions","bbox":[94,630,1036,-18]}
+{"kind":"textbox","text":"Assertion-Based Verification Plan","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"SVA checker","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"10","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"Assertions observe internal controller state and state exactly what must be true after each accepted operation.","bbox":[70,92,1000,42]}
+{"kind":"textbox","text":"RST_STATE","bbox":[96,168,212,20]}
+{"kind":"textbox","text":"After reset: empty high, full low, pointers zero, count zero","bbox":[350,167,720,24]}
+{"kind":"textbox","text":"FULL_FLAG / EMPTY_FLAG","bbox":[96,222,212,20]}
+{"kind":"textbox","text":"Flags must match fifo_count == DEPTH and fifo_count == 0","bbox":[350,221,720,24]}
+{"kind":"textbox","text":"COUNT_RANGE","bbox":[96,276,212,20]}
+{"kind":"textbox","text":"fifo_count must stay within 0..DEPTH","bbox":[350,275,720,24]}
+{"kind":"textbox","text":"WRITE_ONLY","bbox":[96,330,212,20]}
+{"kind":"textbox","text":"write pointer increments, read pointer stable, count increments","bbox":[350,329,720,24]}
+{"kind":"textbox","text":"READ_ONLY","bbox":[96,384,212,20]}
+{"kind":"textbox","text":"read pointer increments, write pointer stable, count decrements","bbox":[350,383,720,24]}
+{"kind":"textbox","text":"READ_WRITE","bbox":[96,438,212,20]}
+{"kind":"textbox","text":"both pointers move while count remains stable","bbox":[350,437,720,24]}
+{"kind":"textbox","text":"READ_EMPTY / WRITE_FULL","bbox":[96,492,212,20]}
+{"kind":"textbox","text":"invalid requests must be blocked at boundaries","bbox":[350,491,720,24]}
+{"kind":"textbox","text":"Example property intent","bbox":[778,527,374,18]}
+{"kind":"textbox","text":"READ_ONLY:\n  (!do_write && do_read) |=>\n    wr_ptr == $past(wr_ptr) &&\n    rd_ptr == $past(rd_ptr) + 1'b1 &&\n    fifo_count == $past(fifo_count) - 1'b1;","bbox":[778,551,374,72]}
+{"kind":"textbox","text":"Fault Injection Methodology","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"Negative testing","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"11","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"Five faulty RTL copies were tested one at a time. The clean testbench and assertion module stayed unchanged.","bbox":[70,92,1010,42]}
+{"kind":"textbox","text":"1","bbox":[84,190,44,30]}
+{"kind":"textbox","text":"Start clean","bbox":[102,264,186,28]}
+{"kind":"textbox","text":"Run clean design and confirm zero errors","bbox":[102,304,186,46]}
+{"kind":"textbox","text":"2","bbox":[376,190,44,30]}
+{"kind":"textbox","text":"Insert one fault","bbox":[394,264,186,28]}
+{"kind":"textbox","text":"Copy one buggy design into EDA Playground design.sv","bbox":[394,304,186,46]}
+{"kind":"textbox","text":"3","bbox":[668,190,44,30]}
+{"kind":"textbox","text":"Run simulation","bbox":[686,264,186,28]}
+{"kind":"textbox","text":"Keep testbench.sv and assert_fifo_ram.sv fixed","bbox":[686,304,186,46]}
+{"kind":"textbox","text":"4","bbox":[960,190,44,30]}
+{"kind":"textbox","text":"Capture evidence","bbox":[978,264,186,28]}
+{"kind":"textbox","text":"Save transcript failures and EPWave waveform","bbox":[978,304,186,46]}
+{"kind":"textbox","text":"Issue 1","bbox":[106,461,72,20]}
+{"kind":"textbox","text":"Reset count not cleared","bbox":[184,461,184,20]}
+{"kind":"textbox","text":"Issue 2","bbox":[466,461,72,20]}
+{"kind":"textbox","text":"Read accepted while empty","bbox":[544,461,184,20]}
+{"kind":"textbox","text":"Issue 3","bbox":[826,461,72,20]}
+{"kind":"textbox","text":"Full flag asserted too early","bbox":[904,461,184,20]}
+{"kind":"textbox","text":"Issue 4","bbox":[106,533,72,20]}
+{"kind":"textbox","text":"Empty flag asserted one count early","bbox":[184,533,184,20]}
+{"kind":"textbox","text":"Issue 5","bbox":[466,533,72,20]}
+{"kind":"textbox","text":"Read pointer does not advance","bbox":[544,533,184,20]}
+{"kind":"textbox","text":"Baseline Expected Behaviour","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"Clean RTL","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"12","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"Before negative testing, the clean FIFO must satisfy normal state transitions and boundary blocking rules.","bbox":[70,92,1000,42]}
+{"kind":"textbox","text":"0","bbox":[112,173,228,30]}
+{"kind":"textbox","text":"expected scoreboard errors for clean run","bbox":[112,210,228,24]}
+{"kind":"textbox","text":"16","bbox":[406,173,198,30]}
+{"kind":"textbox","text":"FIFO depth when AW = 4","bbox":[406,210,198,24]}
+{"kind":"textbox","text":"5","bbox":[670,173,218,30]}
+{"kind":"textbox","text":"intentional faulty RTL versions","bbox":[670,210,218,24]}
+{"kind":"textbox","text":"SVA","bbox":[954,173,198,30]}
+{"kind":"textbox","text":"structural/protocol checks","bbox":[954,210,198,24]}
+{"kind":"textbox","text":"Reset","bbox":[142,323,190,20]}
+{"kind":"textbox","text":"wr_ptr = 0, rd_ptr = 0, fifo_count = 0, empty = 1","bbox":[390,322,720,22]}
+{"kind":"textbox","text":"Write-only","bbox":[142,373,190,20]}
+{"kind":"textbox","text":"wr_ptr increments and fifo_count increases","bbox":[390,372,720,22]}
+{"kind":"textbox","text":"Read-only","bbox":[142,423,190,20]}
+{"kind":"textbox","text":"rd_ptr increments and fifo_count decreases","bbox":[390,422,720,22]}
+{"kind":"textbox","text":"Simultaneous read/write","bbox":[142,473,190,20]}
+{"kind":"textbox","text":"both pointers move and fifo_count stays stable","bbox":[390,472,720,22]}
+{"kind":"textbox","text":"Boundary rules","bbox":[142,523,190,20]}
+{"kind":"textbox","text":"read blocked when empty; write blocked when full","bbox":[390,522,720,22]}
+{"kind":"textbox","text":"Pointer update example","bbox":[764,504,314,18]}
+{"kind":"textbox","text":"Correct RTL target:\nrd_ptr <= rd_ptr + 1'b1;\n\nIssue 5 bug changes this to:\nrd_ptr <= rd_ptr;","bbox":[764,528,314,56]}
+{"kind":"textbox","text":"Fault Results: Issues 1 and 2","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"Reset and underflow protection","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"13","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"Issue 1: reset count not cleared","bbox":[88,112,224,26]}
+{"kind":"textbox","text":"Caught by: RST_STATE\nEffect: empty flag wrong after reset","bbox":[88,150,178,42]}
+{"kind":"textbox","text":"Bug:     fifo_count <= 1;\nCorrect: fifo_count <= 0;","bbox":[308,138,264,36]}
+{"kind":"textbox","text":"Issue 2: read while empty","bbox":[692,112,224,26]}
+{"kind":"textbox","text":"Caught by: READ_EMPTY\nEffect: counter underflow / invalid data","bbox":[692,150,178,42]}
+{"kind":"textbox","text":"Bug:     assign do_read = rd_en;\nCorrect: assign do_read = rd_en && !empty;","bbox":[912,138,264,36]}
+{"kind":"textbox","text":"Issue 1 waveform: fifo_count starts at 1 during reset","bbox":[78,247,520,20]}
+{"kind":"image","path":"C:\\Users\\kapil\\OneDrive\\Desktop\\DesignProject\\images\\issue1\\Screenshot 2026-05-04 125730.png","bbox":[74,284,528,114]}
+{"kind":"textbox","text":"Issue 1 log: reset assertion failures","bbox":[78,437,520,20]}
+{"kind":"image","path":"C:\\Users\\kapil\\OneDrive\\Desktop\\DesignProject\\images\\issue1\\Screenshot 2026-05-04 130009.png","bbox":[74,474,528,156]}
+{"kind":"textbox","text":"Issue 2 waveform: do_read accepted while empty","bbox":[682,247,520,20]}
+{"kind":"image","path":"C:\\Users\\kapil\\OneDrive\\Desktop\\DesignProject\\images\\issue2\\Screenshot 2026-05-04 130622.png","bbox":[678,284,528,114]}
+{"kind":"textbox","text":"Issue 2 log: READ_EMPTY, unknown data, count range","bbox":[682,437,520,20]}
+{"kind":"image","path":"C:\\Users\\kapil\\OneDrive\\Desktop\\DesignProject\\images\\issue2\\Screenshot 2026-05-04 130312.png","bbox":[678,474,528,156]}
+{"kind":"textbox","text":"Fault Result: Issue 3","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"Full flag asserted too early","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"14","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"Bug inserted","bbox":[92,108,302,18]}
+{"kind":"textbox","text":"Bug:\nassign full = (fifo_count == 1);\n\nCorrect:\nassign full = (fifo_count == DEPTH);","bbox":[92,132,302,84]}
+{"kind":"textbox","text":"Observed failure","bbox":[98,276,294,28]}
+{"kind":"textbox","text":"At fifo_count = 1, the DUT reports full even though 15 locations remain available.","bbox":[98,316,294,34]}
+{"kind":"textbox","text":"Checker response","bbox":[98,412,294,28]}
+{"kind":"textbox","text":"FULL_FLAG assertion compares the flag against fifo_count == DEPTH and fails repeatedly.","bbox":[98,452,294,34]}
+{"kind":"textbox","text":"Waveform: full asserted when fifo_count is one","bbox":[474,107,708,20]}
+{"kind":"image","path":"C:\\Users\\kapil\\OneDrive\\Desktop\\DesignProject\\images\\issue3\\Screenshot 2026-05-04 131017.png","bbox":[470,144,716,182]}
+{"kind":"textbox","text":"Simulation log: repeated FULL_FLAG assertion failures","bbox":[474,371,708,20]}
+{"kind":"image","path":"C:\\Users\\kapil\\OneDrive\\Desktop\\DesignProject\\images\\issue3\\Screenshot 2026-05-04 130851.png","bbox":[470,408,716,190]}
+{"kind":"textbox","text":"Interpretation: this bug does not necessarily corrupt data immediately, but it destroys usable FIFO capacity and blocks valid writes too early.","bbox":[462,623,730,36]}
+{"kind":"textbox","text":"Fault Result: Issue 4","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"Empty flag asserted one count early","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"15","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"Bug inserted","bbox":[92,108,302,18]}
+{"kind":"textbox","text":"Bug:\nassign empty = (fifo_count == 1);\n\nCorrect:\nassign empty = (fifo_count == 0);","bbox":[92,132,302,84]}
+{"kind":"textbox","text":"Observed failure","bbox":[98,276,294,28]}
+{"kind":"textbox","text":"The DUT reports empty while one valid FIFO entry still remains.","bbox":[98,316,294,34]}
+{"kind":"textbox","text":"Checker response","bbox":[98,412,294,28]}
+{"kind":"textbox","text":"EMPTY_FLAG assertion fails because empty no longer represents the true count-zero condition.","bbox":[98,452,294,34]}
+{"kind":"textbox","text":"Waveform: empty high while fifo_count equals one","bbox":[474,107,708,20]}
+{"kind":"image","path":"C:\\Users\\kapil\\OneDrive\\Desktop\\DesignProject\\images\\issue4\\Screenshot 2026-05-04 131259.png","bbox":[470,144,716,182]}
+{"kind":"textbox","text":"Simulation log: EMPTY_FLAG assertion failures","bbox":[474,371,708,20]}
+{"kind":"image","path":"C:\\Users\\kapil\\OneDrive\\Desktop\\DesignProject\\images\\issue4\\Screenshot 2026-05-04 131207.png","bbox":[470,408,716,190]}
+{"kind":"textbox","text":"Interpretation: status flag correctness is part of functional correctness because empty directly controls whether reads are accepted.","bbox":[462,623,730,36]}
+{"kind":"textbox","text":"Fault Result: Issue 5","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"Read pointer does not advance","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"16","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"Real affected RTL file","bbox":[92,116,312,28]}
+{"kind":"textbox","text":"rtl/sync_fifo_ram.sv\nThe selected write-side code is correct; the fault is in the read pointer update.","bbox":[92,156,312,34]}
+{"kind":"textbox","text":"Issue 5 code focus","bbox":[86,250,320,18]}
+{"kind":"textbox","text":"Bug:\nif (do_read) begin\n  rd_ptr <= rd_ptr;\nend\n\nCorrect:\nrd_ptr <= rd_ptr + 1'b1;","bbox":[86,274,320,108]}
+{"kind":"textbox","text":"Effect","bbox":[92,442,312,28]}
+{"kind":"textbox","text":"Valid reads are accepted and fifo_count changes, but rd_ptr remains fixed. The FIFO repeatedly reads the same RAM address.","bbox":[92,482,312,44]}
+{"kind":"textbox","text":"Waveform: rd_ptr remains fixed while reads occur","bbox":[484,103,716,20]}
+{"kind":"image","path":"C:\\Users\\kapil\\OneDrive\\Desktop\\DesignProject\\images\\issue5\\Screenshot 2026-05-04 131456.png","bbox":[480,140,724,196]}
+{"kind":"textbox","text":"Simulation log: READ_ONLY assertion and data mismatch","bbox":[484,383,716,20]}
+{"kind":"image","path":"C:\\Users\\kapil\\OneDrive\\Desktop\\DesignProject\\images\\issue5\\Screenshot 2026-05-04 131432.png","bbox":[480,420,724,174]}
+{"kind":"textbox","text":"Assertion localizes the internal pointer failure; scoreboard confirms the visible FIFO-order failure.","bbox":[472,622,740,32]}
+{"kind":"textbox","text":"Comparative Result Summary","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"Assertions + scoreboard","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"17","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"Issue","bbox":[64,130,104,22]}
+{"kind":"textbox","text":"Fault injected","bbox":[184,130,344,22]}
+{"kind":"textbox","text":"Primary assertion","bbox":[544,130,244,22]}
+{"kind":"textbox","text":"Scoreboard effect","bbox":[804,130,244,22]}
+{"kind":"textbox","text":"Conclusion","bbox":[1064,130,164,22]}
+{"kind":"textbox","text":"1","bbox":[66,175,100,46]}
+{"kind":"textbox","text":"fifo_count not cleared on reset","bbox":[186,175,340,46]}
+{"kind":"textbox","text":"RST_STATE","bbox":[546,175,240,46]}
+{"kind":"textbox","text":"Queue/data mismatch later","bbox":[806,175,240,46]}
+{"kind":"textbox","text":"reset state bug","bbox":[1066,175,160,46]}
+{"kind":"textbox","text":"2","bbox":[66,245,100,46]}
+{"kind":"textbox","text":"do_read ignores empty","bbox":[186,245,340,46]}
+{"kind":"textbox","text":"READ_EMPTY, COUNT_RANGE","bbox":[546,245,240,46]}
+{"kind":"textbox","text":"Data mismatch after underflow","bbox":[806,245,240,46]}
+{"kind":"textbox","text":"boundary bug","bbox":[1066,245,160,46]}
+{"kind":"textbox","text":"3","bbox":[66,315,100,46]}
+{"kind":"textbox","text":"full high at count 1","bbox":[186,315,340,46]}
+{"kind":"textbox","text":"FULL_FLAG","bbox":[546,315,240,46]}
+{"kind":"textbox","text":"False full messages","bbox":[806,315,240,46]}
+{"kind":"textbox","text":"capacity loss","bbox":[1066,315,160,46]}
+{"kind":"textbox","text":"4","bbox":[66,385,100,46]}
+{"kind":"textbox","text":"empty high at count 1","bbox":[186,385,340,46]}
+{"kind":"textbox","text":"EMPTY_FLAG","bbox":[546,385,240,46]}
+{"kind":"textbox","text":"False empty messages","bbox":[806,385,240,46]}
+{"kind":"textbox","text":"valid reads blocked","bbox":[1066,385,160,46]}
+{"kind":"textbox","text":"5","bbox":[66,455,100,46]}
+{"kind":"textbox","text":"rd_ptr stuck during reads","bbox":[186,455,340,46]}
+{"kind":"textbox","text":"READ_ONLY","bbox":[546,455,240,46]}
+{"kind":"textbox","text":"Expected order breaks","bbox":[806,455,240,46]}
+{"kind":"textbox","text":"pointer/data bug","bbox":[1066,455,160,46]}
+{"kind":"textbox","text":"Pattern: assertions catch control/protocol violations at the exact clocked condition; the scoreboard catches externally visible data-order consequences.","bbox":[98,594,1070,40]}
+{"kind":"textbox","text":"Key Findings and Contribution","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"What the project demonstrates","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"18","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"The project demonstrates that assertion-based verification improves observability beyond transaction-level checking alone.","bbox":[70,92,1050,44]}
+{"kind":"textbox","text":"1. Assertions localize failures","bbox":[102,196,300,28]}
+{"kind":"textbox","text":"Internal signals such as wr_ptr, rd_ptr, fifo_count, do_write, and do_read are checked at the clock where the rule is violated.","bbox":[102,236,300,104]}
+{"kind":"textbox","text":"2. Scoreboard validates behavior","bbox":[492,196,300,28]}
+{"kind":"textbox","text":"The queue-based reference model confirms whether the output data still follows FIFO order after control faults.","bbox":[492,236,300,104]}
+{"kind":"textbox","text":"3. Waveforms explain timing","bbox":[882,196,300,28]}
+{"kind":"textbox","text":"EPWave evidence connects assertion timestamps to signal transitions, making root cause analysis clear.","bbox":[882,236,300,104]}
+{"kind":"textbox","text":"Main contribution","bbox":[160,454,240,28]}
+{"kind":"textbox","text":"A parameterized synchronous FIFO was verified with a SystemVerilog class-based environment, bound SVA checker, scoreboard, and five intentional negative tests. The result is a reusable verification base that can be extended toward UVM.","bbox":[160,492,920,46]}
+{"kind":"textbox","text":"Conclusion, Future Work, and References","bbox":[52,18,940,34]}
+{"kind":"textbox","text":"Close","bbox":[925,19,300,30]}
+{"kind":"textbox","text":"Assertion-Based Verification of Synchronous FIFO","bbox":[52,684,600,20]}
+{"kind":"textbox","text":"19","bbox":[1168,678,58,30]}
+{"kind":"textbox","text":"Conclusion","bbox":[94,120,496,28]}
+{"kind":"textbox","text":"The clean FIFO behavior was established first. Each injected RTL fault produced assertion or scoreboard failures, proving that the environment can detect reset, boundary, flag, pointer, and data-order bugs.","bbox":[94,160,496,96]}
+{"kind":"textbox","text":"Future improvements","bbox":[694,120,496,28]}
+{"kind":"textbox","text":"Migrate to UVM agents and sequences.\nAdd functional coverage bins for full/empty transitions.\nAdd constrained random regression tests.\nAdd coverage-driven closure and CI simulation scripts.","bbox":[694,160,496,96]}
+{"kind":"textbox","text":"References","bbox":[100,344,220,28]}
+{"kind":"textbox","text":"1. IEEE SA, IEEE 1800-2023: SystemVerilog - Unified Hardware Design, Specification, and Verification Language.\n2. Accellera, Universal Verification Methodology community and standards pages.\n3. Local project report: TIET_Assertion_Based_FIFO_Verification_Report.docx.\n4. Project source files: rtl/sync_fifo_ram.sv, rtl/sync_ram.sv, tb/assert_fifo_ram.sv, tb/*.svh.\n5. Simulation evidence: EPWave and transcript screenshots from images/issue1 through images/issue5.","bbox":[100,392,1000,114]}
+{"kind":"textbox","text":"Final message: SVA gives precise internal failure localization; the scoreboard proves whether the design still obeys FIFO data ordering.","bbox":[100,536,1000,34]}
