@@ -10,7 +10,7 @@ class environment;
   mailbox #(transaction) gdmbx; // Generator + Driver mailbox
   mailbox #(transaction) msmbx; // Monitor + Scoreboard mailbox
   event nextgs;
-  virtual fifo_if fif;
+  virtual fifo_if fif;          // Full interface handle used to distribute modport views
 
   function new(virtual fifo_if fif);
     gdmbx = new();

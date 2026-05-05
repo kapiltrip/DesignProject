@@ -3,7 +3,7 @@
 
 class driver;
 
-  virtual fifo_if fif;          // Virtual interface to the FIFO
+  virtual fifo_if.DRV fif;      // Driver modport view of the FIFO interface
   mailbox #(transaction) mbx;   // Mailbox for communication
   transaction datac;            // Transaction object for communication
 
