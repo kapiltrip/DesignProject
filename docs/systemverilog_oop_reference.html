@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>SystemVerilog OOP Concepts - Quick Reference</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 18mm 16mm;
+    }
+
+    :root {
+      --ink: #172033;
+      --muted: #526078;
+      --line: #cfd6e4;
+      --soft: #eef4f9;
+      --accent: #0f766e;
+      --accent-2: #7c2d12;
+      --code-bg: #f6f8fb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.42;
+      background: white;
+    }
+
+    h1,
+    h2,
+    h3 {
+      margin: 0;
+      color: var(--ink);
+      line-height: 1.16;
+    }
+
+    h1 {
+      font-size: 24pt;
+      letter-spacing: 0;
+    }
+
+    h2 {
+      margin-top: 18pt;
+      padding-bottom: 4pt;
+      border-bottom: 1px solid var(--line);
+      font-size: 15pt;
+    }
+
+    h3 {
+      margin-top: 12pt;
+      font-size: 12pt;
+    }
+
+    p {
+      margin: 5pt 0;
+    }
+
+    a {
+      color: #0b5cad;
+      text-decoration: none;
+    }
+
+    code {
+      padding: 1px 3px;
+      border-radius: 3px;
+      background: var(--code-bg);
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 9.5pt;
+    }
+
+    pre {
+      margin: 7pt 0 10pt;
+      padding: 8pt;
+      border: 1px solid #dce2ec;
+      border-radius: 6px;
+      overflow: hidden;
+      background: var(--code-bg);
+      font-family: Consolas, "Courier New", monospace;
+      font-size: 8.7pt;
+      line-height: 1.28;
+      white-space: pre-wrap;
+    }
+
+    table {
+      width: 100%;
+      margin: 8pt 0 12pt;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    th,
+    td {
+      padding: 6pt 7pt;
+      border: 1px solid var(--line);
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--soft);
+      color: #26344d;
+      font-weight: 700;
+      text-align: left;
+    }
+
+    ul {
+      margin: 5pt 0 8pt 16pt;
+      padding: 0;
+    }
+
+    li {
+      margin: 2.5pt 0;
+    }
+
+    .subtitle {
+      margin-top: 6pt;
+      color: var(--muted);
+      font-size: 11.5pt;
+    }
+
+    .note {
+      margin: 10pt 0;
+      padding: 8pt 10pt;
+      border-left: 4px solid var(--accent);
+      background: #eef9f7;
+    }
+
+    .warn {
+      border-left-color: var(--accent-2);
+      background: #fff3ed;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8pt;
+      margin-top: 8pt;
+    }
+
+    .box {
+      padding: 8pt;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #fbfcfe;
+    }
+
+    .box h3 {
+      margin-top: 0;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 9pt;
+    }
+
+    .page-break {
+      break-before: page;
+    }
+  </style>
+</head>
+<body>
+  <h1>SystemVerilog OOP Concepts</h1>
+  <p class="subtitle">Quick reference for verification testbenches: inheritance, polymorphism, abstraction, and encapsulation.</p>
+
+  <div class="note">
+    <strong>Big idea:</strong> In a SystemVerilog testbench, classes help you model verification components such as transactions, generator, driver, monitor, scoreboard, and environment. OOP is mainly about organizing behavior, reusing code, and controlling how components interact.
+  </div>
+
+  <h2>One-Line Revision</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 22%;">Concept</th>
+        <th style="width: 43%;">Meaning</th>
+        <th style="width: 35%;">Main SV Keywords</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Inheritance</strong></td>
+        <td>Build a child class from a parent class so the child can reuse and extend existing data and methods.</td>
+        <td><code>extends</code>, <code>super</code></td>
+      </tr>
+      <tr>
+        <td><strong>Polymorphism</strong></td>
+        <td>Use a base-class handle to call a method, but execute the child class version at run time.</td>
+        <td><code>virtual function</code>, <code>virtual task</code></td>
+      </tr>
+      <tr>
+        <td><strong>Abstraction</strong></td>
+        <td>Define what behavior is required while leaving details to a derived class.</td>
+        <td><code>virtual class</code>, <code>pure virtual</code></td>
+      </tr>
+      <tr>
+        <td><strong>Encapsulation</strong></td>
+        <td>Protect internal data and expose controlled methods to read or modify it.</td>
+        <td><code>local</code>, <code>protected</code></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>1. Inheritance</h2>
+  <p><strong>Definition:</strong> Inheritance means a child class is created from a parent class. The child class gets the parent class members and can add new members or override behavior.</p>
+  <p><strong>Meaning in verification:</strong> Use inheritance when several components share common behavior but each one needs a small specialization. For example, a base transaction can hold common fields, and a child transaction can add protocol-specific fields.</p>
+
+  <pre>class base_txn;
+  bit [7:0] data;
+
+  function void print();
+    $display("data=%0d", data);
+  endfunction
+endclass
+
+class fifo_txn extends base_txn;
+  bit rd_en;
+  bit wr_en;
+endclass</pre>
+
+  <p>Here, <code>fifo_txn</code> inherits <code>data</code> and <code>print()</code> from <code>base_txn</code>, then adds <code>rd_en</code> and <code>wr_en</code>.</p>
+
+  <h2>2. Polymorphism</h2>
+  <p><strong>Definition:</strong> Polymorphism means "many forms." In SystemVerilog, a parent-class handle can point to a child-class object. If the method is declared <code>virtual</code>, the simulator calls the child version of that method.</p>
+  <p><strong>Meaning in verification:</strong> A testbench can call the same method name on different child objects and get different behavior. This is useful for reusable drivers, sequences, and tests.</p>
+
+  <pre>class base_test;
+  virtual task run();
+    $display("base run");
+  endtask
+endclass
+
+class fifo_test extends base_test;
+  task run();
+    $display("fifo run");
+  endtask
+endclass
+
+module tb;
+  base_test t;
+  fifo_test f;
+
+  initial begin
+    f = new();
+    t = f;
+    t.run(); // prints: fifo run
+  end
+endmodule</pre>
+
+  <p>The handle type is <code>base_test</code>, but the object is <code>fifo_test</code>. Because <code>run()</code> is virtual in the base class, the child implementation runs.</p>
+
+  <div class="note warn">
+    <strong>Important:</strong> Without <code>virtual</code> on the base method, a base-class handle may call the base method instead of the child method. For polymorphism, mark the base method as <code>virtual</code>.
+  </div>
+
+  <h2 class="page-break">3. Abstraction</h2>
+  <p><strong>Definition:</strong> Abstraction means the base class describes the required behavior, but does not fully implement it. In SystemVerilog this is commonly done with <code>virtual class</code> and <code>pure virtual</code> methods.</p>
+  <p><strong>Meaning in verification:</strong> Use abstraction when every child component must provide a certain method, but each child implements it differently.</p>
+
+  <pre>virtual class base_driver;
+  pure virtual task drive();
+endclass
+
+class fifo_driver extends base_driver;
+  task drive();
+    $display("drive FIFO signals");
+  endtask
+endclass</pre>
+
+  <p><code>base_driver</code> cannot be constructed directly because it is a virtual class. It says every real driver must provide <code>drive()</code>. The child class <code>fifo_driver</code> provides the actual code.</p>
+
+  <h2>4. Encapsulation</h2>
+  <p><strong>Definition:</strong> Encapsulation means keeping internal class data protected and allowing access only through controlled methods.</p>
+  <p><strong>Meaning in verification:</strong> Use encapsulation to prevent accidental changes to important state, such as error counts, transaction IDs, or scoreboard queues.</p>
+
+  <pre>class scoreboard;
+  local int err_count;
+
+  function void add_error();
+    err_count++;
+  endfunction
+
+  function int get_error_count();
+    return err_count;
+  endfunction
+endclass</pre>
+
+  <p>Because <code>err_count</code> is <code>local</code>, code outside the class cannot directly change it. Other code must call <code>add_error()</code> or <code>get_error_count()</code>.</p>
+
+  <h3><code>local</code> vs <code>protected</code></h3>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 25%;">Qualifier</th>
+        <th>Who Can Access It?</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>local</code></td>
+        <td>Only methods inside the same class.</td>
+      </tr>
+      <tr>
+        <td><code>protected</code></td>
+        <td>Methods inside the same class and methods inside derived child classes.</td>
+      </tr>
+      <tr>
+        <td>No qualifier</td>
+        <td>Public by default in SystemVerilog class members.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h2>Abstraction vs Encapsulation</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 28%;">Concept</th>
+        <th>Focus</th>
+        <th>Simple Memory Hook</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Abstraction</strong></td>
+        <td>Hide or postpone implementation details by exposing only the required behavior.</td>
+        <td>What should this class do?</td>
+      </tr>
+      <tr>
+        <td><strong>Encapsulation</strong></td>
+        <td>Hide or protect internal data and control who can access it.</td>
+        <td>Who can touch this data?</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="grid">
+    <div class="box">
+      <h3>Abstraction Example</h3>
+      <p>A base driver says every child driver must have <code>drive()</code>, but the base driver does not know the exact protocol signals.</p>
+    </div>
+    <div class="box">
+      <h3>Encapsulation Example</h3>
+      <p>A scoreboard keeps its expected-data queue private so only scoreboard methods can push, pop, or clear it.</p>
+    </div>
+  </div>
+
+  <h2 class="page-break">How This Relates To Your FIFO Testbench</h2>
+  <table>
+    <thead>
+      <tr>
+        <th style="width: 26%;">Class</th>
+        <th>OOP Role</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>transaction</code></td>
+        <td>Represents one operation or observed activity. It carries fields like <code>oper</code>, <code>wr_data</code>, <code>rd_data</code>, <code>full</code>, and <code>empty</code>.</td>
+      </tr>
+      <tr>
+        <td><code>generator</code></td>
+        <td>Creates randomized transaction objects and sends them to the driver.</td>
+      </tr>
+      <tr>
+        <td><code>driver</code></td>
+        <td>Converts transaction fields into pin-level FIFO activity on the virtual interface.</td>
+      </tr>
+      <tr>
+        <td><code>monitor</code></td>
+        <td>Samples actual FIFO interface signals and sends observed transaction objects to the scoreboard.</td>
+      </tr>
+      <tr>
+        <td><code>scoreboard</code></td>
+        <td>Stores expected write data and compares expected data against actual <code>rd_data</code>.</td>
+      </tr>
+      <tr>
+        <td><code>environment</code></td>
+        <td>Connects all components together and controls test phases.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>Your current testbench uses classes, objects, mailboxes, and virtual interfaces, but it does not yet heavily use inheritance, polymorphism, abstraction, or access qualifiers. Those concepts become more useful as the testbench grows into reusable base classes and child classes.</p>
+
+  <h2>Short Exam-Style Definitions</h2>
+  <ul>
+    <li><strong>Inheritance:</strong> Mechanism to create a derived class from a base class using <code>extends</code>, allowing reuse and extension of properties and methods.</li>
+    <li><strong>Polymorphism:</strong> Mechanism where a base-class handle can refer to a derived-class object and a virtual method call executes the derived implementation.</li>
+    <li><strong>Abstraction:</strong> Mechanism to specify required behavior without exposing or providing all implementation details, often using <code>virtual class</code> and <code>pure virtual</code> methods.</li>
+    <li><strong>Encapsulation:</strong> Mechanism to protect class data and control access to it using class methods and access qualifiers such as <code>local</code> and <code>protected</code>.</li>
+  </ul>
+
+  <h2>References</h2>
+  <ol>
+    <li>IEEE Std 1800-2017, <em>SystemVerilog - Unified Hardware Design, Specification, and Verification Language</em>, clauses on classes, inheritance, virtual methods, abstract classes, and access control. Reference copy: <a href="https://fpga.mit.edu/6205/_static/F23/documentation/1800-2017.pdf">https://fpga.mit.edu/6205/_static/F23/documentation/1800-2017.pdf</a></li>
+    <li>Doulos, <em>SystemVerilog Classes Tutorial</em>: <a href="https://www.doulos.com/knowhow/systemverilog/systemverilog-tutorials/systemverilog-classes-tutorial/">https://www.doulos.com/knowhow/systemverilog/systemverilog-tutorials/systemverilog-classes-tutorial/</a></li>
+    <li>ChipVerify, <em>SystemVerilog Abstract Class</em>: <a href="https://www.chipverify.com/systemverilog/systemverilog-abstract-class">https://www.chipverify.com/systemverilog/systemverilog-abstract-class</a></li>
+    <li>ChipVerify, <em>SystemVerilog local vs protected</em>: <a href="https://www.chipverify.com/systemverilog/systemverilog-local-access-level">https://www.chipverify.com/systemverilog/systemverilog-local-access-level</a></li>
+  </ol>
+
+  <p class="small">Prepared as a concise study note for SystemVerilog verification testbenches.</p>
+</body>
+</html>

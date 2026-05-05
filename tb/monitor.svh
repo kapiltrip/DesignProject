@@ -3,7 +3,7 @@
 
 class monitor;
 
-  virtual fifo_if fif;          // Virtual interface to the FIFO
+  virtual fifo_if.MON fif;      // Monitor modport view of the FIFO interface
   mailbox #(transaction) mbx;   // Mailbox for communication
   transaction tr;               // Transaction object for monitoring
 
